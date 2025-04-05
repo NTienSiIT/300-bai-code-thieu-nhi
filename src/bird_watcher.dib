@@ -1,0 +1,77 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+class BirdCount {
+    private static int[] _birdCountLastWeek;
+    private int[] _birdsPerDay;
+
+    public BirdCount(int[] birdsPerDay) {
+        _birdCountLastWeek = new int[] {
+            0, 2, 5, 3, 7, 8, 4
+        };
+        _birdsPerDay = birdsPerDay;
+    }
+
+    public static void LastWeek() {
+        for (int i = 0; i < _birdCountLastWeek.Length; i++) {
+            Console.Write(_birdCountLastWeek[i] + " ");
+        }
+        Console.WriteLine();
+    }
+
+    public void Today() {
+        if (_birdsPerDay == null || _birdsPerDay.Length == 0) {
+            return;
+        }
+        Console.WriteLine(_birdsPerDay[_birdsPerDay.Length - 1]);
+    }
+
+    public void IncrementTodaysCount() {
+        ++_birdsPerDay[_birdsPerDay.Length - 1];
+    }
+
+    public void HasDayWithoutBirds() {
+        string result = "false";
+        for (int i = 0; i < _birdsPerDay.Length; i++) {
+            if (_birdsPerDay[i] == 0) {
+                result = "true";
+                Console.WriteLine(result);
+                return;
+            }
+        }
+        Console.WriteLine(result);
+    }
+    
+    public void CountForFirstDays(int numberOfDays) {
+        int count = 0;
+        for (int i = 0; i < numberOfDays; i++) {
+            count += _birdsPerDay[i];
+        }
+        Console.WriteLine(count);
+    }
+
+    public void BusyDays() {
+        int busyDays = 0;
+        for (int i = 0; i < _birdsPerDay.Length; i++) {
+            if (_birdsPerDay[i] >= 5) {
+                busyDays++;
+            }
+        }
+        Console.WriteLine(busyDays);
+    }
+}
+
+#!csharp
+
+int[] birdsPerDay = { 2, 5, 0, 7, 4, 1 };
+var birdCount = new BirdCount(birdsPerDay);
+
+BirdCount.LastWeek();
+birdCount.Today();
+birdCount.IncrementTodaysCount();
+birdCount.HasDayWithoutBirds();
+birdCount.CountForFirstDays(3);
+birdCount.BusyDays();
