@@ -1,0 +1,96 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public enum AccountType {
+    Guest,
+    User,
+    Moderator,
+}
+
+public enum Permission {
+    Read,
+    Write,
+    Delete,
+    All,
+    None,
+}
+
+public class Permissions {
+    private AccountType type;
+    private List<Permission> permissions = new();
+
+    public Permissions(AccountType type) {
+        this.type = type;
+        SetDefaultPermissions(type);
+    }
+
+    public void ChangeAccountType(AccountType newType)
+    {
+        this.type = newType;
+        permissions.Clear();
+        SetDefaultPermissions(newType);
+    }
+
+    public List<Permission> GetPermissions()
+    {
+        return new List<Permission>(permissions);
+    }
+
+    public void Grant(Permission grant) {
+        if (!permissions.Contains(grant)) {
+            permissions.Add(grant);
+        }
+    }
+
+    public void Revoke(Permission revoke) {
+        permissions.Remove(revoke);
+    }
+
+    public bool Check(Permission check) {
+        return permissions.Contains(check);
+    }
+
+    private void SetDefaultPermissions(AccountType accountType)
+    {
+        switch (accountType)
+        {
+            case AccountType.Guest:
+                permissions.Add(Permission.Read);
+                break;
+            case AccountType.User:
+                permissions.Add(Permission.Read);
+                permissions.Add(Permission.Write);
+                break;
+            case AccountType.Moderator:
+                permissions.Add(Permission.Read);
+                permissions.Add(Permission.Write);
+                permissions.Add(Permission.Delete);
+                break;
+            default:
+                permissions.Add(Permission.None);
+                break;
+        }
+    }
+}
+
+#!csharp
+
+var guestPermissions = new Permissions(AccountType.Guest);
+Console.WriteLine(string.Join(", ", guestPermissions.GetPermissions())); // Read
+
+var userPermissions = new Permissions(AccountType.User);
+Console.WriteLine(string.Join(", ", userPermissions.GetPermissions())); // Read, Write
+
+var moderatorPermissions = new Permissions(AccountType.Moderator);
+Console.WriteLine(string.Join(", ", moderatorPermissions.GetPermissions())); // Read, Write, Delete
+
+// Đổi AccountType của User thành Moderator
+userPermissions.ChangeAccountType(AccountType.Moderator);
+Console.WriteLine(string.Join(", ", userPermissions.GetPermissions())); // Read, Write, Delete
+
+// Cấp quyền Write thêm cho Guest (nếu chưa có)
+guestPermissions.Grant(Permission.Write);
+Console.WriteLine(string.Join(", ", guestPermissions.GetPermissions())); // Read, Write

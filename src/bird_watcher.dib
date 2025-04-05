@@ -5,13 +5,10 @@
 #!csharp
 
 class BirdCount {
-    private static int[] _birdCountLastWeek;
+    private static int[] _birdCountLastWeek = new int[] { 0, 2, 5, 3, 7, 8, 4 };
     private int[] _birdsPerDay;
 
     public BirdCount(int[] birdsPerDay) {
-        _birdCountLastWeek = new int[] {
-            0, 2, 5, 3, 7, 8, 4
-        };
         _birdsPerDay = birdsPerDay;
     }
 

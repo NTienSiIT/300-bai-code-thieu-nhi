@@ -1,0 +1,54 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class SimpleCalculator {
+    public static string Calculate(int operand1, int operand2, string operation) {
+        if (operation == null)
+            throw new ArgumentNullException(nameof(operation), "Operation cannot be null");
+
+        if (operation == string.Empty)
+            throw new ArgumentException("Operation cannot be empty", nameof(operation));
+
+        return operation.ToLower() switch {
+            "+" => (operand1 + operand2).ToString(),
+            "-" => (operand1 - operand2).ToString(),
+            "*" => (operand1 * operand2).ToString(),
+            "/" => operand2 != 0 ? $"{operand1} / {operand2} = {operand1 / operand2}" : throw new DivideByZeroException("Cannot divide by zero"),
+            _ => throw new ArgumentOutOfRangeException(nameof(operation), "Invalid operation")
+        };
+    }
+}
+
+#!csharp
+
+Console.WriteLine(SimpleCalculator.Calculate(16, 51, "+"));
+Console.WriteLine(SimpleCalculator.Calculate(32, 6, "*"));
+Console.WriteLine(SimpleCalculator.Calculate(512, 4, "/"));
+Console.WriteLine(SimpleCalculator.Calculate(100, 10, "-"));
+
+try {
+    Console.WriteLine(SimpleCalculator.Calculate(8, 2, ""));
+} catch (Exception ex) {
+    Console.WriteLine(ex.Message);
+}
+
+try {
+    Console.WriteLine(SimpleCalculator.Calculate(58, 6, null));
+} catch (Exception ex) {
+    Console.WriteLine(ex.Message);
+}
+
+try {
+    Console.WriteLine(SimpleCalculator.Calculate(512, 0, "/"));
+} catch (Exception ex) {
+    Console.WriteLine(ex.Message);
+}
+
+try {
+    Console.WriteLine(SimpleCalculator.Calculate(512, 4, "invalid"));
+} catch (Exception ex) {
+    Console.WriteLine(ex.Message);
+}

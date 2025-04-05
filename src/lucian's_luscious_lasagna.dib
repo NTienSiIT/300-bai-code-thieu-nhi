@@ -1,0 +1,24 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class Lasagna {
+    public int ExpectedMinutesInOven() => 40;
+
+    public int RemainingMinutesInOven(int actualMinutesInOven) => ExpectedMinutesInOven() - actualMinutesInOven;
+
+    public int PreparationTimeInMinutes(int numberOfLayers) => numberOfLayers * 2;
+
+    public int ElapsedTimeInMinutes(int numberOfLayers, int actualMinutesInOven) => PreparationTimeInMinutes(numberOfLayers) + actualMinutesInOven;
+}
+
+#!csharp
+
+var lasagna = new Lasagna();
+
+Console.WriteLine(lasagna.ExpectedMinutesInOven());
+Console.WriteLine(lasagna.RemainingMinutesInOven(30));
+Console.WriteLine(lasagna.PreparationTimeInMinutes(2));
+Console.WriteLine(lasagna.ElapsedTimeInMinutes(3, 20));

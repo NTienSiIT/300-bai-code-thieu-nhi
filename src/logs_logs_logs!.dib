@@ -1,0 +1,51 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+enum LogLevel
+{
+    Unknown = 0,
+    Trace = 1,
+    Debug = 2,
+    Info = 4,
+    Warn = 5,
+    Error = 6,
+    Fatal = 42
+}
+
+public class LogLine
+{
+    // 1. Parse log level từ log string
+    public static string ParseLogLevel(string logLine)
+    {
+        // Ví dụ logLine: "[ERROR]: Disk failure"
+        int start = logLine.IndexOf('[') + 1;
+        int end = logLine.IndexOf(']');
+        return logLine.Substring(start, end - start).ToLower();
+    }
+
+    // 2. Convert log level string + message thành short log
+    public static string OutputForShortLog(string logLevel, string message)
+    {
+        // Parse string thành enum
+        if (Enum.TryParse(typeof(LogLevel), logLevel, true, out object? levelEnum))
+        {
+            int levelValue = (int)levelEnum!;
+            return $"{levelValue}:{message}";
+        }
+
+        // Nếu không parse được thì trả Unknown
+        return $"{(int)LogLevel.Unknown}:{message}";
+    }
+}
+
+#!csharp
+
+string log = "[ERROR]: Disk not found";
+string level = LogLine.ParseLogLevel(log);          // "error"
+string output = LogLine.OutputForShortLog(level, "Disk not found");  // "6:Disk not found"
+
+Console.WriteLine(level);   // error
+Console.WriteLine(output);  // 6:Disk not found

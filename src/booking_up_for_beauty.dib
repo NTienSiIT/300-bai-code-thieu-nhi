@@ -1,0 +1,46 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+using System.Globalization;
+
+#!csharp
+
+public static class Appointment
+{
+    public static DateTime Schedule(string appointmentDateDescription)
+    {
+        return DateTime.Parse(appointmentDateDescription, CultureInfo.InvariantCulture);
+    }
+
+    public static bool HasPassed(DateTime appointmentDate)
+    {
+        return appointmentDate < DateTime.Now;
+    }
+
+    public static bool IsAfternoonAppointment(DateTime appointmentDate)
+    {
+        return appointmentDate.Hour >= 12 && appointmentDate.Hour < 18;
+    }
+
+    public static string Description(DateTime appointmentDate)
+    {
+        return $"You have an appointment on {appointmentDate:dddd, MMMM d, yyyy 'at' HH:mm}.";
+    }
+
+    public static DateTime AnniversaryDate()
+    {
+        var year = DateTime.Now.Year;
+        return new DateTime(year, 9, 15);
+    }
+}
+
+#!csharp
+
+var dt = Appointment.Schedule("7/25/2025 13:45:00");  
+Console.WriteLine(Appointment.IsAfternoonAppointment(dt));
+Console.WriteLine(Appointment.Description(dt));
+Console.WriteLine(Appointment.HasPassed(dt));
+Console.WriteLine(Appointment.AnniversaryDate().ToShortDateString());

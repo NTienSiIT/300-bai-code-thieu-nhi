@@ -1,0 +1,96 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public static class DialingCodes {
+    private static Dictionary<int, string> _countryCodes = new();
+
+    public static Dictionary<int, string> GetEmptyDictionary() => new Dictionary<int, string>();
+
+    public static Dictionary<int, string> GetExistingDictionary() => _countryCodes;
+
+    public static Dictionary<int, string> AddCountryToEmptyDictionary(int code, string country) {
+        _countryCodes.Add(code, country);
+        return _countryCodes;
+    }
+
+    public static Dictionary<int, string> AddCountryToExistingDictionary(Dictionary<int, string> countryCodes, int code, string country) {
+        countryCodes.Add(code, country);
+        return countryCodes;
+    }
+
+    public static string GetCountryNameFromDictionary(Dictionary<int, string> countryCodes, int code) {
+        if (countryCodes.TryGetValue(code, out var countryName)) {
+            return countryName;
+        }
+        return string.Empty;
+    }
+
+    public static bool CheckCodeExists(Dictionary<int, string> countryCodes, int code) {
+        return countryCodes.ContainsKey(code);
+    }
+
+    public static Dictionary<int, string> UpdateDictionary(Dictionary<int, string> countryCodes, int code, string country) {
+        if (countryCodes.ContainsKey(code)) {
+            countryCodes[code] = country;
+        } else {
+            countryCodes.Add(code, country);
+        }
+        return countryCodes;
+    }
+
+    public static Dictionary<int, string> RemoveCountryFromDictionary(Dictionary<int, string> countryCodes, int code) {
+        if (countryCodes.ContainsKey(code)) {
+            countryCodes.Remove(code);
+        }
+        return countryCodes;
+    }
+
+    public static string FindLongestCountryName(Dictionary<int, string> countryCodes) {
+        return countryCodes.OrderByDescending(kvp => kvp.Value.Length).FirstOrDefault().Value;
+    }
+}
+
+#!csharp
+
+static void PrintDictionary(Dictionary<int, string> dict)
+{
+    if (dict == null || dict.Count == 0)
+    {
+        Console.WriteLine("\n" + "(empty)");
+        return;
+    }
+
+    foreach (var kvp in dict)
+    {
+        Console.WriteLine($"Code: {kvp.Key}, Country: {kvp.Value}");
+    }
+    Console.WriteLine();
+}
+
+#!csharp
+
+// Create a new dictionary
+PrintDictionary(DialingCodes.GetEmptyDictionary());
+// Create a pre-populated dictionary
+PrintDictionary(DialingCodes.GetExistingDictionary());
+// Add a country to an empty dictionary
+PrintDictionary(DialingCodes.AddCountryToEmptyDictionary(1, "United States of America"));
+// Add a country to an existing dictionary
+PrintDictionary(DialingCodes.AddCountryToExistingDictionary(DialingCodes.GetExistingDictionary(), 44, "United Kingdom"));
+PrintDictionary(DialingCodes.AddCountryToExistingDictionary(DialingCodes.GetExistingDictionary(), 55, "Brazil"));
+PrintDictionary(DialingCodes.AddCountryToExistingDictionary(DialingCodes.GetExistingDictionary(), 91, "India"));
+// Get the country name matching a dialing code
+Console.WriteLine(DialingCodes.GetCountryNameFromDictionary(DialingCodes.GetExistingDictionary(), 55));
+Console.WriteLine(DialingCodes.GetCountryNameFromDictionary(DialingCodes.GetExistingDictionary(), 999));
+// Check that a country exists in the dictionary
+Console.WriteLine(DialingCodes.CheckCodeExists(DialingCodes.GetExistingDictionary(), 55));
+// Update a country name
+PrintDictionary(DialingCodes.UpdateDictionary(DialingCodes.GetExistingDictionary(), 1, "Les États-Unis"));
+PrintDictionary(DialingCodes.UpdateDictionary(DialingCodes.GetExistingDictionary(), 999, "Newlands"));
+// Remove a country from the dictionary
+PrintDictionary(DialingCodes.RemoveCountryFromDictionary(DialingCodes.GetExistingDictionary(), 91));
+// Find the country with the longest name
+Console.WriteLine(DialingCodes.FindLongestCountryName(DialingCodes.GetExistingDictionary()));
