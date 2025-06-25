@@ -1,0 +1,18 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+int[] arr = new int[10] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+#!csharp
+
+var nQuery = from num in arr
+             where num % 2 == 0
+             select num;
+
+foreach (var n in nQuery)
+{
+    Console.Write("{0} ", n);
+}
