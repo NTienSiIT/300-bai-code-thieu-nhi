@@ -1,0 +1,43 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class Solution {
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1; // Con trỏ cuối cùng trong nums1
+        int p2 = n - 1; // Con trỏ cuối cùng trong nums2
+        int p = m + n - 1; // Con trỏ cuối cùng trong nums1
+
+        // Kết hợp hai mảng từ cuối về đầu
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[p] = nums1[p1];
+                p1--;
+            } else {
+                nums1[p] = nums2[p2];
+                p2--;
+            }
+            p--;
+        }
+
+        // Nếu còn phần tử trong nums2, sao chép chúng vào nums1
+        while (p2 >= 0) {
+            nums1[p] = nums2[p2];
+            p--;
+            p2--;
+        }
+    }
+}
+
+#!csharp
+
+int[] nums1 = {1, 2, 3, 0, 0, 0};
+int[] nums2 = {2, 5, 6};
+new Solution().Merge(nums1, 3, nums2, 3);
+// nums1 [1, 2, 2, 3, 5, 6]
+
+foreach (int num in nums1) {
+    Console.Write(num + " ");
+}

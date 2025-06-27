@@ -1,0 +1,29 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class Solution {
+    public void Merge(int[] nums1, int m, int[] nums2, int n) {
+        List<int> list1 = new List<int>(nums1.Take(m));
+        List<int> list2 = new List<int>(nums2.Take(n));
+
+        List<int> mergedList = list1.Concat(list2).OrderBy(x => x).ToList();
+
+        for (int i = 0; i < mergedList.Count; i++) {
+            nums1[i] = mergedList[i];
+        }
+    }
+}
+
+#!csharp
+
+int[] nums1 = {1, 2, 3, 0, 0, 0};
+int[] nums2 = {2, 5, 6};
+new Solution().Merge(nums1, 3, nums2, 3);
+// nums1 = [1, 2, 2, 3, 5, 6]
+
+foreach (var num in nums1) {
+    Console.Write(num + " ");
+}
