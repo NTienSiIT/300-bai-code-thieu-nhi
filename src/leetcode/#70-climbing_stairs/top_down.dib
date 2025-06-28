@@ -1,0 +1,26 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class Solution {
+    private Dictionary<int, int> memo = new Dictionary<int, int>();
+
+    public int ClimbStairs(int n) {
+        if (n <= 2) return n;
+        if (memo.ContainsKey(n)) return memo[n];
+
+        int result = ClimbStairs(n - 1) + ClimbStairs(n - 2);
+        memo[n] = result;
+
+        return result;
+    }
+}
+
+#!csharp
+
+Console.WriteLine(new Solution().ClimbStairs(5)); // Output: 8
+Console.WriteLine(new Solution().ClimbStairs(10)); // Output: 89
+Console.WriteLine(new Solution().ClimbStairs(20)); // Output: 10946
+Console.WriteLine(new Solution().ClimbStairs(30)); // Output: 1346269

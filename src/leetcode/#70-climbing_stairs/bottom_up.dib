@@ -1,0 +1,28 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class Solution {
+    public int ClimbStairs(int n) {
+        if (n <= 2) return n;
+
+        int[] dp = new int[n + 1];
+        dp[1] = 1;
+        dp[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        return dp[n];
+    }
+}
+
+#!csharp
+
+Console.WriteLine(new Solution().ClimbStairs(5)); // Output: 8
+Console.WriteLine(new Solution().ClimbStairs(10)); // Output: 89
+Console.WriteLine(new Solution().ClimbStairs(20)); // Output: 10946
+Console.WriteLine(new Solution().ClimbStairs(30)); // Output: 134626
