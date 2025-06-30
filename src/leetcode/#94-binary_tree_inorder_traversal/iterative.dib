@@ -1,0 +1,49 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"name":"csharp","languageName":"csharp"},{"name":"fsharp","languageName":"F#","aliases":["f#","fs"]},{"name":"html","languageName":"HTML"},{"name":"http","languageName":"HTTP"},{"name":"javascript","languageName":"JavaScript","aliases":["js"]},{"name":"mermaid","languageName":"Mermaid"},{"name":"pwsh","languageName":"PowerShell","aliases":["powershell"]},{"name":"value"}]}}
+
+#!csharp
+
+public class TreeNode {
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
+
+    public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+#!csharp
+
+public class Solution {
+    public IList<int> InorderTraversal(TreeNode root) {
+        List<int> result = new();
+        Stack<TreeNode> stack = new();
+        TreeNode current = root;
+
+        while (current != null || stack.Count > 0) {
+            // Đi hết trái
+            while (current != null) {
+                stack.Push(current);
+                current = current.left;
+            }
+
+            // Quay lui
+            current = stack.Pop();
+            result.Add(current.val);  // Gốc
+            current = current.right;  // Sang phải
+        }
+
+        return result;
+    }
+}
+
+#!csharp
+
+var root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3)));
+var solution = new Solution();
+var result = solution.InorderTraversal(root);
+Console.WriteLine(string.Join(", ", result));  // Kết quả: 1, 3, 2
